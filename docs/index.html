@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Crawler Went Quiet</title>
+<meta name="description" content="Hour by hour, from Cloudflare Radar: drone strikes on Yandex data centers, 8–11 October 2026, and what happened to automated traffic from Yandex and the rest of Russia.">
+<meta property="og:title" content="The Crawler Went Quiet">
+<meta property="og:description" content="Hour by hour, from Cloudflare Radar: drone strikes on Yandex data centers, 8–11 October 2026, and what happened to automated traffic from Yandex and the rest of Russia.">
+<link rel="icon" href="icon.svg">
+<link rel="alternate" hreflang="en" href="https://nanobotco.github.io/yandex-bots/">
+<link rel="alternate" hreflang="th" href="https://nanobotco.github.io/yandex-bots/th/">
+<style>
+:root{color-scheme:light dark;
+ --bg:#fff7ec;--panel:#fff;--ink:#1c1530;--mute:#675c77;--line:#f0dcc4;--accent:#f04a00;--gold:#ffb000;--grid:#e9d8c4;--shadow:rgba(60,20,0,.14);
+ --night:#16112a;--night-ink:#fbf2e8;--night-mute:#bcb0cc;--night-grid:#3a2f55;
+ --display:"Avenir Next Condensed","HelveticaNeue-CondensedBold","Arial Narrow Bold","Franklin Gothic Heavy",Impact,system-ui,sans-serif;
+ --body:"Avenir Next",Avenir,"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+ --thai:"Noto Sans Thai","Leelawadee UI","Thonburi","Sukhumvit Set",Tahoma,sans-serif;
+ --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --bg:#120d20;--panel:#1d1631;--ink:#fbf2e8;--mute:#bcb0cc;--line:#352a4d;--accent:#ff7a3d;--gold:#ffc53d;--grid:#2e2546;--shadow:rgba(0,0,0,.5)}}
+:root[data-theme="dark"]{--bg:#120d20;--panel:#1d1631;--ink:#fbf2e8;--mute:#bcb0cc;--line:#352a4d;--accent:#ff7a3d;--gold:#ffc53d;--grid:#2e2546;--shadow:rgba(0,0,0,.5)}
+*{box-sizing:border-box}
+html{font-size:18px;scroll-behavior:smooth;scroll-padding-top:3.5rem}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-text-size-adjust:100%;overflow-x:hidden}
+:lang(th),.th{font-family:var(--thai);line-height:1.85}
+a{color:var(--accent);text-underline-offset:.18em}
+a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+.wrap{max-width:62rem;margin:0 auto;padding:0 16px}
+header.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:3px solid var(--accent)}
+header.top .wrap{display:flex;align-items:center;gap:.4rem 1rem;flex-wrap:wrap;padding-top:.45rem;padding-bottom:.45rem}
+.brand{font-family:var(--display);font-weight:800;font-size:1.05rem;text-transform:uppercase;text-decoration:none;color:var(--ink);white-space:nowrap}
+:lang(th) .brand{font-family:var(--thai);text-transform:none}
+header.top nav{display:flex;gap:.1rem .75rem;flex-wrap:wrap;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;font-weight:800}
+:lang(th) header.top nav{text-transform:none;letter-spacing:0;font-size:.8rem}
+header.top nav a{text-decoration:none;color:var(--mute)}
+header.top nav a:hover{color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent)}
+.langsw{margin-left:auto;font-size:.74rem;font-weight:800;text-decoration:none;padding:.15rem .6rem;border:2px solid var(--line);border-radius:99px;color:var(--mute)}
+.hero{background:var(--night);color:var(--night-ink);padding:2.2rem 0 1rem;border-bottom:4px solid var(--accent)}
+.kicker{display:block;font-family:var(--display);font-size:.72rem;font-weight:800;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+:lang(th) .kicker{font-family:var(--thai);letter-spacing:.05em}
+h1{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:clamp(2.4rem,8vw,5rem);line-height:.88;margin:0 0 .8rem;max-width:12ch}
+.hero .lede{max-width:40rem;color:#fff1e2;font-size:clamp(1rem,2.2vw,1.15rem);margin:0 0 .6rem}
+.hint{font-size:.78rem;color:var(--night-mute);margin:.2rem 0 .4rem}
+.chart{position:relative;width:100%;touch-action:pan-y}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+#hero-chart{margin-top:.4rem}
+h2{font-family:var(--display);font-size:clamp(1.8rem,5vw,2.8rem);line-height:.95;margin:3rem 0 .8rem;font-weight:800;text-transform:uppercase;padding-bottom:.8rem;border-bottom:3px solid var(--ink)}
+:lang(th) h1,:lang(th) h2{font-family:var(--thai);text-transform:none;line-height:1.2}
+p{max-width:44rem}
+.slab{display:grid;grid-template-columns:repeat(auto-fit,minmax(8rem,1fr));gap:.7rem;margin:1.6rem 0 0}
+.slab button{all:unset;cursor:pointer;padding:.9rem .8rem;border-radius:18px;background:var(--panel);box-shadow:0 8px 24px -14px var(--shadow);position:relative;overflow:hidden;display:block;transition:transform .15s}
+.slab button:active{transform:scale(.96) rotate(-1deg)}
+.slab button:focus-visible{outline:3px solid var(--gold)}
+.slab b{display:block;font-family:var(--display);font-size:clamp(1.8rem,4.4vw,2.6rem);line-height:.92;font-weight:800;color:var(--accent)}
+.slab span{display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink);font-weight:800;margin-top:.35rem}
+.slab i{display:block;font-style:normal;font-size:.72rem;color:var(--mute);margin-top:.1rem}
+:lang(th) .slab span{letter-spacing:0;font-size:.8rem;text-transform:none}
+.steps p{border-left:4px solid var(--accent);padding-left:.8rem;margin:.7rem 0}
+.legend{display:flex;gap:1.2rem;font-size:.8rem;font-weight:700;color:var(--mute);margin:.4rem 0}
+.legend span{display:inline-flex;align-items:center;gap:.4rem}
+.legend svg{width:28px;height:10px}
+.grid10{display:grid;grid-template-columns:repeat(auto-fill,minmax(11.5rem,1fr));gap:.7rem}
+.panel{all:unset;cursor:pointer;display:block;background:var(--panel);border-radius:16px;padding:.55rem .6rem .3rem;box-shadow:0 8px 24px -16px var(--shadow)}
+.panel:focus-visible{outline:3px solid var(--gold)}
+.panel .nm{font-weight:800;font-size:.82rem;display:flex;justify-content:space-between;gap:.4rem}
+.panel .nm em{font-style:normal;color:var(--accent);font-family:var(--display);font-size:1rem}
+.panel svg{display:block;width:100%;height:auto}
+.box{background:var(--panel);border-radius:20px;padding:1rem;box-shadow:0 10px 30px -18px var(--shadow)}
+.eq{font-family:var(--mono);font-size:.8rem;line-height:1.7;background:var(--panel);border-radius:14px;padding:.8rem 1rem;overflow-x:auto;margin:1rem 0;box-shadow:0 8px 24px -16px var(--shadow)}
+table{border-collapse:collapse;width:100%;max-width:34rem;font-size:.86rem;margin:.6rem 0}
+caption{text-align:left;color:var(--mute);font-size:.78rem;padding-bottom:.4rem}
+th,td{padding:.3rem .5rem;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}
+td{font-variant-numeric:tabular-nums}
+details summary{cursor:pointer;font-weight:800;color:var(--accent);font-size:.86rem}
+#tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:var(--bg);font-size:.78rem;line-height:1.35;padding:.4rem .6rem;border-radius:10px;opacity:0;transition:opacity .12s;max-width:15rem;box-shadow:0 6px 20px -8px #000}
+#tip b{color:var(--gold)}
+footer{margin:4rem 0 0;padding:1.4rem 0 2.4rem;border-top:3px solid var(--ink);font-size:.8rem;color:var(--mute)}
+.spider{cursor:pointer}
+@keyframes zz{0%{opacity:0;transform:translate(0,0) scale(.6)}30%{opacity:1}100%{opacity:0;transform:translate(14px,-34px) scale(1.2)}}
+.z{animation:zz 2.2s ease-out infinite;transform-box:fill-box}
+@keyframes wob{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+.wiggle{animation:wob .5s ease-in-out 2;transform-box:fill-box;transform-origin:50% 50%}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="brand" href="#top">The Crawler Went Quiet</a>
+<nav><a href="#hours">Hours</a><a href="#networks">Networks</a><a href="#russia">Russia</a><a href="#sum">Sum</a><a href="#bots">Bots</a><a href="#data">Data</a></nav>
+<a class="langsw" href="th/" hreflang="th">ไทย</a>
+</div></header>
+<section class="hero" id="top"><div class="wrap">
+<span class="kicker">Cloudflare Radar · 8–11 October 2026</span>
+<h1>The Crawler Went Quiet</h1>
+<p class="lede">Drones struck Yandex data centers in Sasovo, Kaluga and Vladimir between 8 and 11 October 2026. Automated traffic from Yandex's network, as Cloudflare counts it, fell 93% in a day. Automated traffic from the rest of Russia barely moved: +0.1%.</p>
+<p class="hint">Drag across the chart. Tap the spider.</p>
+<div class="chart" id="hero-chart" role="img" aria-label="Hour by hour, from Cloudflare Radar: drone strikes on Yandex data centers, 8–11 October 2026, and what happened to automated traffic from Yandex and the rest of Russia."></div>
+</div></section>
+<main class="wrap">
+<div class="slab"><button type="button"><b>−93%</b><span>Yandex bots</span><i>Sun 11 Oct vs Sun 4 Oct</i></button><button type="button"><b>−80%</b><span>Yandex Cloud bots</span><i>same days</i></button><button type="button"><b>−10%</b><span>All Russian bots</span><i>same days</i></button><button type="button"><b>+0.1%</b><span>Russia without Yandex</span><i>same days</i></button><button type="button"><b>100%</b><span>of Russia's drop</span><i>is Yandex</i></button><button type="button"><b>99.6%</b><span>of Yandex's traffic</span><i>was bots, 4 Oct</i></button></div>
+
+<h2 id="hours">Hour by hour</h2>
+<div class="steps"><p><b>1 Oct 05:00 – 2 Oct 06:00 UTC.</b> A week before the first strike, Yandex's bot traffic sat near 40 for 26 hours. No strike was reported.</p><p><b>8 Oct, 08:00 UTC.</b> Sasovo, Ryazan region, overnight. Yandex's bot traffic steps down 34% within the hour and holds there.</p><p><b>9 Oct.</b> Kaluga. Reported struck; the series shows no step that day.</p><p><b>11 Oct, 00:00–02:00 UTC.</b> Vladimir. Yandex said operations at the facility were suspended. Bot traffic goes under 1% of its three-week peak from 01:00 to 13:00 UTC, flickers back to about a fifth of normal at 15:00, and settles near a tenth.</p><p>Human traffic from the same network fell 90% on 11 Oct. The whole network went dark, not the bots alone.</p></div>
+
+<h2 id="networks">Ten networks, one scale</h2>
+<p>Each panel is one network's automated traffic, 100 = its own 21 September–6 October average. Same scale everywhere. Tap a panel.</p>
+<div class="legend"><span><svg viewBox="0 0 28 10"><path d="M1 5h26" stroke="var(--accent)" stroke-width="2.5" fill="none"/></svg>Bots</span><span><svg viewBox="0 0 28 10"><path d="M1 5h26" stroke="var(--mute)" stroke-width="2" stroke-dasharray="4 3" fill="none"/></svg>Humans</span></div>
+<div class="grid10" id="grid10"></div>
+<p class="hint" style="color:var(--mute)">Human traffic from Russia's mobile networks rose on 11 October. Radar's data doesn't say why.</p>
+<details><summary>Network · Bots · Humans</summary>
+<table><caption>Sunday 11 October against Sunday 4 October, daily mean of hourly values</caption><thead><tr><th>Network</th><th>Bots</th><th>Humans</th></tr></thead><tbody><tr><td>Yandex</td><td>−93%</td><td>−90%</td></tr><tr><td>Yandex Cloud</td><td>−80%</td><td>−59%</td></tr><tr><td>Rostelecom</td><td>−2%</td><td>+23%</td></tr><tr><td>MTS</td><td>+4%</td><td>+84%</td></tr><tr><td>MegaFon</td><td>+13%</td><td>+133%</td></tr><tr><td>Beeline</td><td>+2%</td><td>+18%</td></tr><tr><td>Selectel</td><td>+3%</td><td>−38%</td></tr><tr><td>Timeweb</td><td>−46%</td><td>−72%</td></tr><tr><td>VK</td><td>−25%</td><td>−26%</td></tr><tr><td>All of Russia</td><td>−10%</td><td>+32%</td></tr></tbody></table>
+</details>
+
+<h2 id="russia">Yandex's share of Russia's bots</h2>
+<p>Of all automated requests from Russian networks, Yandex sent 9.9% on 4 October and 0.7% on 11 October. It had been the second-largest sender every day since 28 September; on 11 October it was 23rd.</p>
+<div class="box"><div class="chart" id="share-chart"></div></div>
+
+<h2 id="sum">Where Russia's 10% went</h2>
+<p>Russia's bot traffic on 4 October = 100. Each network's loss = its share that day × how far it fell.</p>
+<div class="box"><div class="chart" id="wf-chart"></div></div>
+<div class="eq">Yandex: 9.87 × −93.1% = −9.19<br>Yandex Cloud: 1.19 × −79.8% = −0.95<br>All of Russia: 100 × −10.1% = −10.09<br>Everyone else: −10.09 − (−9.19) − (−0.95) = +0.05 on a base of 88.94 → +0.1%</div>
+
+<h2 id="bots">Which bots</h2>
+<p>Radar sorts each request reaching a Cloudflare-served site as likely human or likely automated. It counts requests, not operators or purposes.</p><p>Before the strikes, 99.6% of Yandex's requests were automated. Yandex runs a search crawler that indexes the web; Radar's per-network counts don't say which Yandex service sent a request.</p><p>A request from a server outside Russia counts under that server's country. Bots run from foreign servers, home connections or phones don't show up as Yandex.</p><p>So the drop measures Yandex's own machines going offline. Whether any influence operation slowed is a separate question this data can't answer.</p>
+
+<h2 id="data">Data</h2>
+<p>Every series on this page: <a href="data.json">data.json</a>, pulled from the Cloudflare Radar API (HTTP requests by bot class, hourly, 21 Sep–11 Oct 2026; top networks by day; pulled 2026-10-12T06:23Z). Each hourly series is divided by its own 21 September–6 October mean.</p><p>Reporting: <a href="https://thedeepdive.ca/bot-traffic-from-yandexs-network-falls-to-near-zero-after-third-drone-strike/">The Deep Dive</a>, <a href="https://runtimewire.com/article/bluesky-yandex-bot-traffic-cloudflare-radar">RuntimeWire</a>, <a href="https://www.tomshardware.com/tech-industry/data-centers/russian-disinformation-bot-traffic-nearly-eliminated-overnight-after-ukraine-drone-strikes-cripple-multiple-of-russias-google-data-centers-ukraine-intensifies-bombing-of-yandex-data-centers-in-response-to-moscows-strikes-on-kyiv-data-centers">Tom's Hardware</a>. Ukraine has not formally claimed the strikes; Yandex named a drone attack for Vladimir.</p>
+<footer>Data: <a href="https://radar.cloudflare.com/">Cloudflare Radar</a>, CC BY-NC 4.0. Text and drawings: CC BY 4.0, NaNoBotCo. Code: MIT.</footer>
+</main>
+<div id="tip" role="status" aria-live="polite"></div>
+<script>window.YB={"lang": "en", "base": "", "strikes": [["2026-10-08T00:00:00Z", "Sasovo"], ["2026-10-09T00:00:00Z", "Kaluga"], ["2026-10-11T00:00:00Z", "Vladimir"]], "tip_bots": "bots", "tip_hum": "humans", "tip_base": "of the 21 Sep–6 Oct average", "axis_base": "baseline = 100", "wf": [["4 Oct", "total"], ["Yandex", "step"], ["Yandex Cloud", "step"], ["everyone else", "step"], ["11 Oct", "total"]], "wfv": [100, -9.19070693329407, -0.9469740080633148, 0.04988067087247072, 89.91219972951508], "names": {"yandex": "Yandex", "ycloud": "Yandex Cloud", "rt": "Rostelecom", "mts": "MTS", "megafon": "MegaFon", "beeline": "Beeline", "selectel": "Selectel", "timeweb": "Timeweb", "vk": "VK", "ru": "All of Russia"}, "chg": {"yandex": -93.1, "ycloud": -79.8, "rt": -1.8, "mts": 3.6, "megafon": 12.6, "beeline": 2.4, "selectel": 3.5, "timeweb": -46.2, "vk": -25.0, "ru": -10.1}}</script>
+<script src="yb.js" defer></script>
+</body>
+</html>
