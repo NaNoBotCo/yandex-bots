@@ -259,6 +259,13 @@ footer{margin:4rem 0 0;padding:1.4rem 0 2.4rem;border-top:3px solid var(--ink);f
 """
 
 
+SITE = "https://nanobotco.github.io/yandex-bots/"
+CARD_ALT = {
+    "en": "The Crawler Went Quiet: hourly bot traffic, Yandex bots falling after the strikes while the rest of Russia stays level",
+    "th": "เมื่อแมงมุมของยานเดกซ์หลับ: ทราฟฟิกบอตรายชั่วโมง บอตของยานเดกซ์ลดลงหลังการโจมตี ส่วนรัสเซียที่เหลือคงที่",
+}
+
+
 def page(L):
     t = T[L]
     base = "" if L == "en" else "../"
@@ -281,8 +288,17 @@ def page(L):
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{t['title']}</title>
 <meta name="description" content="{html.escape(t['desc'])}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{t['title']}">
 <meta property="og:title" content="{t['title']}">
 <meta property="og:description" content="{html.escape(t['desc'])}">
+<meta property="og:url" content="{SITE}{'' if L == 'en' else 'th/'}">
+<meta property="og:image" content="{SITE}{'' if L == 'en' else 'th/'}card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{html.escape(CARD_ALT[L])}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{SITE}{'' if L == 'en' else 'th/'}card.jpg">
 <link rel="icon" href="{base}icon.svg">
 <link rel="alternate" hreflang="en" href="https://nanobotco.github.io/yandex-bots/">
 <link rel="alternate" hreflang="th" href="https://nanobotco.github.io/yandex-bots/th/">
